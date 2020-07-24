@@ -1,0 +1,63 @@
+{% extends 'posts/base.html' %}
+
+{% load static %}
+
+
+{% block extra_scripts %}
+<script src="{% static 'infinite.js' %}"></script>
+{% endblock extra_scripts%}
+
+{% block main %}
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-variable">
+        <div class="column is-three-fifths">
+
+          <form method="POST" action="{% url 'create-post' %}">
+            {% csrf_token %}
+            <div class="field">
+              <div class="control">
+                <textarea name="text" class="textarea" placeholder="Write your post here" required></textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-link">Post</button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- element where scrolling happens -->
+          <div class="posts" id="scroll-element">
+            {% include 'posts/_posts.html' with posts=posts %}
+          </div>
+
+          <!-- bottom sentinel element -->
+          <div id="bottom-sentinel">
+          </div>
+
+        </div>
+
+
+
+        <div class="column">
+        </div>
+      </div>
+
+    </div>
+  </section>
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let bottomSentinel = document.querySelector("#bottom-sentinel");
+    let scrollElement = document.querySelector("#scroll-element");
+    let baseUrl = "{% url 'post-list' %}";
+    attachInfiniteScroll(bottomSentinel, scrollElement, baseUrl);
+  })
+</script>
+{% endblock main %}
