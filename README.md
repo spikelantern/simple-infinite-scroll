@@ -27,6 +27,12 @@ Run migrations:
 $ python manage.py migrate
 ```
 
+Populate the database:
+
+```
+$ python manage.py populatedb
+```
+
 Now you can start the server:
 
 ```
